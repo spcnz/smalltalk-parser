@@ -6,7 +6,11 @@ Milena Laketić SW 15-2017
 
 Glavne funkcionalnosti: odgovaranje na upite o referencama na klase i poruke u programskom kodu napisanom u Pharo programskom jeziku (find all references).
 
-Model resenja i komunikacija izmedju komponenti prikazana je na diagramu. Sistem bi se sastojao od 2 glavna dela : 
+Model resenja i komunikacija izmedju komponenti prikazana je na diagramu. 
+![alt text](https://github.com/specnazm/smalltalk-parser]/blob/main/components.png?raw=true)
+
+Spomenute klase (Location, ReferenceParam) opisane su https://github.com/Microsoft/language-server-protocol/blob/main/versions/protocol-1-x.md. Po tome bi se vrsila implementacija protokola.
+Sistem bi se sastojao od 2 glavna dela : 
 - Python server koji bi generisao parser za Pharo programski jezik upotrebom TextX
 - Go rest server koji bi implementirao Language Server Protocol
 
