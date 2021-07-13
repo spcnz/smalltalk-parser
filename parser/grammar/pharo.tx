@@ -13,6 +13,7 @@ Statement :
 ReturnStatement:
     '^' ws? return = Expression ws? PERIOD?
 ;
+
 Expressions:
     exp=Expression (ws? PERIOD ws? list=Expression)*
 ;
@@ -89,37 +90,57 @@ CommentPharo:
 ;
 
 Literal :
-    	NUMBER
-	|	STRING
-	|   NIL
-    |   SELF
-    |   BOOL
-    |   SUPER
+    RuntimeLiteral | ParsetimeLiteral
 ;
 
-ws : (SEPARATOR | CommentPharo)+;
+ParsetimeLiteral:
+    RESERVED_WORD
+    | NUMBER
+    | LiteralArray
+    | /'$'./
+    | STRING
+    | Symbol
+    | IDENTIFIER
+;
 
-SELF   : 'self' ;
-SUPER  : 'super' ;
-NIL    : 'nil' ;
+RuntimeLiteral:
+    block=Block
+;
+Block : BLOCK_START (params=BlockParamList PIPE)? ws? body=Program? BLOCK_END;
+
+BlockParamList : (ws? params=BLOCK_PARAM )+;
+
+LiteralArray:
+   '#(' ParsetimeLiteral+ ')'
+;
+
+Symbol: '#' (IDENTIFIER | BINARY_SELECTOR | KEYWORD+ | STRING);
+
+ws : (SEPARATOR | CommentPharo)+;
+BLOCK_PARAM : ':' IDENTIFIER;
+RESERVED_WORD : 'nil' | 'true' | 'false' | 'self' | 'super';
 PERIOD : '.';
 SEPARATOR : /[ \t\r\n]/;
 PIPE : '|' ;
 IDENTIFIER : /[a-zA-Z]+[a-zA-Z0-9_]*/;
 KEYWORD : IDENTIFIER ':';
 
+BLOCK_START : '[';
+BLOCK_END : ']';
+
 BINARY_SELECTOR :
      '+'
     | '*' 
     | '//' 
-    | '=' 
+    | '='
+    | '<<'
     | '>' 
     | '<' 
     | ',' 
     | '@' 
     | '%' 
     | '~' 
-    | PIPE 
+    | PIPE
     | '&' 
     | '-'
     | '/'
