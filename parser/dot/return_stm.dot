@@ -11,14 +11,14 @@
     edge[dir=black,arrowtail=empty]
 
 
-2161887306640 -> 2161887474520 [label="statements:0" arrowtail=diamond dir=both]
-2161887474520 -> 2161887476704 [label="return" arrowtail=diamond dir=both]
-2161887476704 -> 2161887476648 [label="assignment" arrowtail=diamond dir=both]
-2161887476648 -> 2161887476424 [label="value" arrowtail=diamond dir=both]
-2161887476424[label="{:Expression|+literal:int=3\l}"]
-2161887476648[label="{:Assignment|+var:str='a'\l}"]
-2161887476704[label="{:Expression|}"]
-2161887474520[label="{:ReturnStatement|}"]
-2161887306640[label="{:Program|}"]
+2480974362160 -> 2480974362384 [label="statements:0" arrowtail=diamond dir=both]
+2480974362384 -> 2480974362496 [label="return" arrowtail=diamond dir=both]
+2480974362496 -> 2480974361152 [label="assignment" arrowtail=diamond dir=both]
+2480974361152 -> 2480974362776 [label="value" arrowtail=diamond dir=both]
+2480974362776[label="{:Expression|+literal:int=3\l}"]
+2480974361152[label="{:Assignment|+var:str='a'\l}"]
+2480974362496[label="{:Expression|}"]
+2480974362384[label="{:ReturnStatement|}"]
+2480974362160[label="{:Program|}"]
 
 }
