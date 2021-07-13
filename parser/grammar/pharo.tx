@@ -1,0 +1,118 @@
+Program:
+    ws? temps=Temps? ws? statements *= Statement
+    ;
+
+Temps :
+     PIPE (ws? ID)+ ws? PIPE
+   ;
+Statement :
+    ReturnStatement ws?
+    | Expressions ws? PERIOD ws? ReturnStatement
+    | Expressions PERIOD? ws?
+;
+ReturnStatement:
+    '^' ws? Expression ws? PERIOD?
+;
+Expressions:
+    Expression ExpressionList*
+;
+
+ExpressionList: PERIOD ws? Expression;
+
+Expression:
+     literal = Literal
+    | AssignmentExpression
+    | Cascade
+    | BinarySend
+;
+
+AssignmentExpression :
+    var = ID ws? ':=' ws? value = Expression
+;
+
+Cascade:
+    BinarySend (ws? ';' ws? Message)+
+;
+
+Message:
+    UnaryMessage
+    | BinaryMessage
+;
+
+BinarySend:
+    UnarySend BinaryTail?
+;
+
+UnarySend:
+    receiver=Receiver ws? selector=UnaryTail?
+;
+
+UnaryTail:
+    UnaryMessage ws? UnaryTail? ws?
+;
+
+UnaryMessage:
+    ws? unarySelector=ID
+;
+BinaryMessage:
+    receiver=Receiver ws? selector=BINARY_SELECTOR ws? arg=[UnarySend | Receiver]
+;
+
+BinaryTail : BinaryMessage BinaryTail?;
+
+Receiver:
+	Literal
+	| Subexpression
+	|	ID
+;
+
+Subexpression :
+    '(' ws? Expression ws? ')'
+;
+
+Selector:
+	ID
+;
+Argument:
+    Literal
+;
+
+CommentPharo:
+   /"(.|[\r\n])*?"/
+;
+
+Literal :
+    	NUMBER  
+	|	STRING
+	|   Nil 
+    |   Self 
+    |   BOOL
+;
+
+ws : (SEPARATOR | CommentPharo)+;
+
+Self   : 'self' ;
+Super  : 'super' ;
+Nil    : 'nil' ;
+PERIOD : '.';
+SEPARATOR : /[ \t\r\n]/;
+PIPE : '|' ;
+
+BINARY_SELECTOR :
+     '+'
+    | '*' 
+    | '//' 
+    | '=' 
+    | '>' 
+    | '<' 
+    | ',' 
+    | '@' 
+    | '%' 
+    | '~' 
+    | PIPE 
+    | '&' 
+    | '-'
+    | '/'
+    | '\\'
+    ;
+
