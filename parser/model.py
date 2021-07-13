@@ -1,7 +1,6 @@
 from textx import TextXSyntaxError
 from util import *
 
-
 class Workspace(object):
     def __init__(self, root_uri, meta_model):
         self.__root_uri = root_uri
@@ -35,8 +34,7 @@ class Workspace(object):
             doc.parse_model(self.__meta_model)
 
 
-
-class Document(object):
+class Document(object) :
     def __init__(self, uri, source=None):
         self.__uri = uri
         self.__source = source
