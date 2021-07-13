@@ -1,0 +1,66 @@
+
+    digraph textX {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+    node[
+        shape=record,
+        style=filled,
+        fillcolor=aliceblue
+    ]
+    nodesep = 0.3
+    edge[dir=black,arrowtail=empty]
+
+
+1565906946984 -> 1565906995800 [label="statements:0" arrowtail=diamond dir=both]
+1565906995800 -> 1565906995688 [label="exp" arrowtail=diamond dir=both]
+1565906995688 -> 1565906995240 [label="cascade" arrowtail=diamond dir=both]
+1565906995240 -> 1565906996584 [label="receiver" arrowtail=diamond dir=both]
+1565906996584 -> 1565906993224 [label="msg" arrowtail=diamond dir=both]
+1565906993224 -> 1565906993728 [label="keyword:0" arrowtail=diamond dir=both]
+1565906993728[label="{:KeywordPair|+key:str='show:'\l+arg:str='hello'\l}"]
+1565906993224[label="{:KeywordMessage|}"]
+1565906996584[label="{:KeywordSend|+receiver:str='Transcript'\l}"]
+1565906995240 -> 1565906994120 [label="selectors:0" arrowtail=diamond dir=both]
+1565906994120[label="{:UnaryMessage|+unarySelector:str='cr'\l}"]
+1565906995240[label="{:Cascade|}"]
+1565906995688[label="{:Expression|}"]
+1565906995800 -> 1565906996080 [label="list:0" arrowtail=diamond dir=both]
+1565906996080 -> 1565906995464 [label="cascade" arrowtail=diamond dir=both]
+1565906995464 -> 1565906993672 [label="receiver" arrowtail=diamond dir=both]
+1565906993672 -> 1565906996304 [label="msg" arrowtail=diamond dir=both]
+1565906996304 -> 1565906994792 [label="keyword:0" arrowtail=diamond dir=both]
+1565906994792[label="{:KeywordPair|+key:str='show:'\l+arg:str='Pharo is'\l}"]
+1565906996304[label="{:KeywordMessage|}"]
+1565906993672[label="{:KeywordSend|+receiver:str='Transcript'\l}"]
+1565906995464 -> 1565906993280 [label="selectors:0" arrowtail=diamond dir=both]
+1565906993280 -> 1565906994736 [label="keyword:0" arrowtail=diamond dir=both]
+1565906994736[label="{:KeywordPair|+key:str='show:'\l+arg:str='fun '\l}"]
+1565906993280[label="{:KeywordMessage|}"]
+1565906995464 -> 1565906993952 [label="selectors:1" arrowtail=diamond dir=both]
+1565906993952[label="{:UnaryMessage|+unarySelector:str='cr'\l}"]
+1565906995464[label="{:Cascade|}"]
+1565906996080[label="{:Expression|}"]
+1565906995800[label="{:Expressions|}"]
+1565906946984 -> 1565906996696 [label="statements:1" arrowtail=diamond dir=both]
+1565906996696 -> 1565906994344 [label="exp" arrowtail=diamond dir=both]
+1565906994344 -> 1565906995632 [label="cascade" arrowtail=diamond dir=both]
+1565906995632 -> 1565906995520 [label="receiver" arrowtail=diamond dir=both]
+1565906995520 -> 1565906994008 [label="selector" arrowtail=diamond dir=both]
+1565906994008 -> 1565906994064 [label="msg" arrowtail=diamond dir=both]
+1565906994064[label="{:UnaryMessage|+unarySelector:str='new'\l}"]
+1565906994008[label="{:UnaryTail|}"]
+1565906995520[label="{:UnarySend|+receiver:str='Point'\l}"]
+1565906995632 -> 1565906995352 [label="selectors:0" arrowtail=diamond dir=both]
+1565906995352 -> 1565906993896 [label="keyword:0" arrowtail=diamond dir=both]
+1565906993896[label="{:KeywordPair|+key:str='setX:'\l+arg:int=25\l}"]
+1565906995352 -> 1565902235296 [label="keyword:1" arrowtail=diamond dir=both]
+1565902235296[label="{:KeywordPair|+key:str='setY:'\l+arg:int=35\l}"]
+1565906995352[label="{:KeywordMessage|}"]
+1565906995632 -> 1565906994624 [label="selectors:1" arrowtail=diamond dir=both]
+1565906994624[label="{:UnaryMessage|+unarySelector:str='isZero'\l}"]
+1565906995632[label="{:Cascade|}"]
+1565906994344[label="{:Expression|}"]
+1565906996696[label="{:Expressions|list:list=[]\l}"]
+1565906946984[label="{:Program|}"]
+
+}

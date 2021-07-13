@@ -3,7 +3,7 @@ Program:
     ;
 
 Temps :
-     PIPE (ws? vars=ID)+ ws? PIPE
+     PIPE (ws? vars=IDENTIFIER)+ ws? PIPE
    ;
 Statement :
     ReturnStatement ws?
@@ -20,22 +20,25 @@ Expressions:
 Expression:
       assignment=Assignment
     | cascade=Cascade
+    | send=KeywordSend
     | send=BinarySend
     | send=UnarySend
     | literal = Literal
 ;
 
 Assignment :
-    var = ID ws? ':=' ws? value = Expression
+    var = IDENTIFIER ws? ':=' ws? value = Expression
 ;
 
 Cascade:
-    BinarySend (ws? ';' ws? Message)+
+    (receiver=KeywordSend | receiver=BinarySend | receiver=UnarySend) (ws? ';' ws? selectors=Message)+
 ;
 
 Message:
-    UnaryMessage
+    KeywordMessage
     | BinaryMessage
+    | UnaryMessage
+
 ;
 
 BinarySend:
@@ -46,12 +49,16 @@ UnarySend:
     receiver=Receiver ws? selector=UnaryTail
 ;
 
+KeywordSend:
+    (receiver=Receiver | receiver=UnarySend)  msg=KeywordMessage
+;
+
 UnaryTail:
     msg=UnaryMessage ws? tail=UnaryTail? ws?
 ;
 
 UnaryMessage:
-    ws? unarySelector=ID
+    ws? unarySelector=IDENTIFIER
 ;
 
 BinaryTail : msg=BinaryMessage tail=BinaryTail?;
@@ -60,22 +67,21 @@ BinaryMessage:
     ws? selector=BINARY_SELECTOR ws? (arg=UnarySend | arg=Literal)
 ;
 
+KeywordMessage :
+   ws? (keyword=KeywordPair ws?)+
+;
+
+KeywordPair : key=KEYWORD ws? (arg=BinarySend | arg= Literal) ws?;
+
 
 Receiver:
-	Literal
-	| Subexpression
-	|	ID
+    Subexpression
+	|	IDENTIFIER
+	|	Literal
 ;
 
 Subexpression :
     '(' ws? Expression ws? ')'
-;
-
-Selector:
-	ID
-;
-Argument:
-    Literal
 ;
 
 CommentPharo:
@@ -99,6 +105,8 @@ NIL    : 'nil' ;
 PERIOD : '.';
 SEPARATOR : /[ \t\r\n]/;
 PIPE : '|' ;
+IDENTIFIER : /[a-zA-Z]+[a-zA-Z0-9_]*/;
+KEYWORD : IDENTIFIER ':';
 
 BINARY_SELECTOR :
      '+'
