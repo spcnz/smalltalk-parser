@@ -1,0 +1,118 @@
+
+    digraph textX {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+    node[
+        shape=record,
+        style=filled,
+        fillcolor=aliceblue
+    ]
+    nodesep = 0.3
+    edge[dir=black,arrowtail=empty]
+
+
+2068335181336[ label="{Program|}"]
+
+2068335198328[ label="{Temps|vars: list[ID]\l}"]
+
+2068335179448[ label="{*Statement|}"]
+
+2068335209656[ label="{ReturnStatement|}"]
+
+2068335203048[ label="{Expressions|}"]
+
+2068335217208[ label="{Expression|send: OBJECT\lliteral: Literal\l}"]
+
+2068335206824[ label="{Assignment|var: ID\l}"]
+
+2068335207768[ label="{*Cascade|}"]
+
+2068335211544[ label="{*Message|}"]
+
+2068335216264[ label="{BinarySend|}"]
+
+2068335196440[ label="{UnarySend|}"]
+
+2068335176616[ label="{UnaryTail|}"]
+
+2068335219096[ label="{UnaryMessage|unarySelector: ID\l}"]
+
+2068335222872[ label="{BinaryTail|}"]
+
+2068335223816[ label="{BinaryMessage|selector: BINARY_SELECTOR\larg: OBJECT\l}"]
+
+2068335229480[ label="{*Receiver|}"]
+
+2068335221928[ label="{*Subexpression|}"]
+
+
+
+2068335181336 -> 2068335198328[arrowtail=diamond, dir=both, headlabel="temps "]
+2068335181336 -> 2068335179448[arrowtail=diamond, dir=both, headlabel="statements 0..*"]
+2068335179448 -> 2068335209656 [dir=back]
+2068335179448 -> 2068335203048 [dir=back]
+2068335209656 -> 2068335217208[arrowtail=diamond, dir=both, headlabel="return "]
+2068335203048 -> 2068335217208[arrowtail=diamond, dir=both, headlabel="exp "]
+2068335203048 -> 2068335217208[arrowtail=diamond, dir=both, headlabel="list 0..*"]
+2068335217208 -> 2068335206824[arrowtail=diamond, dir=both, headlabel="assignment "]
+2068335217208 -> 2068335207768[arrowtail=diamond, dir=both, headlabel="cascade "]
+2068335199272[ label="{*OBJECT|}"]
+
+2068335206824 -> 2068335217208[arrowtail=diamond, dir=both, headlabel="value "]
+2068335207768 -> 2068335216264 [dir=back]
+2068335207768 -> 2068335211544 [dir=back]
+2068335211544 -> 2068335219096 [dir=back]
+2068335211544 -> 2068335223816 [dir=back]
+2068335216264 -> 2068335229480[arrowtail=diamond, dir=both, headlabel="receiver "]
+2068335216264 -> 2068335222872[arrowtail=diamond, dir=both, headlabel="tail "]
+2068335196440 -> 2068335229480[arrowtail=diamond, dir=both, headlabel="receiver "]
+2068335196440 -> 2068335176616[arrowtail=diamond, dir=both, headlabel="selector "]
+2068335176616 -> 2068335219096[arrowtail=diamond, dir=both, headlabel="msg "]
+2068335176616 -> 2068335176616[arrowtail=diamond, dir=both, headlabel="tail "]
+2068335222872 -> 2068335223816[arrowtail=diamond, dir=both, headlabel="msg "]
+2068335222872 -> 2068335222872[arrowtail=diamond, dir=both, headlabel="tail "]
+2068335199272[ label="{*OBJECT|}"]
+
+2068335229480 -> 2068335221928 [dir=back]
+2068335221928 -> 2068335217208 [dir=back]
+match_rules [ shape=plaintext, label=< <table>
+	<tr>
+		<td><b>Argument</b></td><td>NUMBER|STRING|BOOL</td>
+	</tr>
+	<tr>
+		<td><b>BINARY_SELECTOR</b></td><td>+|*|//|=|&gt;|&lt;|,|@|%|~|&amp;|-|/|\\</td>
+	</tr>
+	<tr>
+		<td><b>CommentPharo</b></td><td>&quot;(.|[\r\n])*?&quot;</td>
+	</tr>
+	<tr>
+		<td><b>Literal</b></td><td>NUMBER|STRING|BOOL</td>
+	</tr>
+	<tr>
+		<td><b>Nil</b></td><td>nil</td>
+	</tr>
+	<tr>
+		<td><b>PERIOD</b></td><td>.</td>
+	</tr>
+	<tr>
+		<td><b>PIPE</b></td><td>|</td>
+	</tr>
+	<tr>
+		<td><b>SEPARATOR</b></td><td>[ \t\r\n]</td>
+	</tr>
+	<tr>
+		<td><b>Selector</b></td><td>ID</td>
+	</tr>
+	<tr>
+		<td><b>Self</b></td><td>self</td>
+	</tr>
+	<tr>
+		<td><b>Super</b></td><td>super</td>
+	</tr>
+	<tr>
+		<td><b>ws</b></td><td>ws</td>
+	</tr>
+</table> >]
+
+
+}

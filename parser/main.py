@@ -1,5 +1,9 @@
 from textx import metamodel_from_file, TextXSyntaxError
 from textx.export import model_export
+from os import listdir
+from os.path import isfile, join
+from subprocess import check_call
+
 
 
 def print_stm(stm):
@@ -11,36 +15,41 @@ def print_stm(stm):
         print(stm)
 
 
+def find_unary_msg(model):
+    pass
+
+
 def start():
-    file_names = ['comment_only.st', 'simple_without_msg.st']
+    file_names = [f for f in listdir("examples") if isfile(join("examples", f))]
+    failed_num = 0
+
+
     meta_model = metamodel_from_file("grammar/pharo.tx")
     for file_name in file_names:
         try:
             model = meta_model.model_from_file("examples/" + file_name)
-            if (hasattr(model, "statements")):
-                for stm in model.statements:
-                    if (type(stm).__name__ == "AssignmentExpression") :
-                        print ("AssignmentExpression ", stm.var , ":=", stm.value)
-                    elif (type(stm).__name__ == "UnaryMessage") :
-                        print ("UnaryMessage Poruka : ", stm.selector ," se salje objektu : " )
-                        print_stm(stm.receiver)
-                    elif (type(stm).__name__ == "BinaryMessage"):
-                        print("BinaryMessage Poruka : ", stm.selector, " se salje objektu : ")
-                        print_stm(stm.receiver)
-                        print(" sa argumentom : ", stm.arg)
-                    else:
-                        print(type(stm), stm)
-                    print("===========")
-            model_export(model, file_name +'.dot')
-            print("========= SUCCESSFULLY PARSED ========")
-            print("FILE NAME : ", file_name)
-            print()
+
+            find_unary_msg(model)
+            dot_file_name = 'dot/' + file_name.replace(".st", "") +'.dot'
+            model_export(model, dot_file_name)
+            check_call(['dot','-Tpng',dot_file_name,'-o','images/' + file_name.replace(".st", "") + '.png'])
+
+            #
+            # print("========= SUCCESSFULLY PARSED ========")
+            # print("FILE NAME : ", file_name)
+            # print()
 
         except TextXSyntaxError as err:
             print ("========= TEST FAILED ========")
             print ("FILE NAME : ", file_name)
             print (err)
             print()
+            failed_num += 1
+
+
+    print()
+    print("TEST FAILED : ", failed_num)
+    print("TEST PASSED : ", len(file_names) - failed_num)
 
 
 if __name__ == '__main__':

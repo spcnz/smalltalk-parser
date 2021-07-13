@@ -1,0 +1,60 @@
+
+    digraph textX {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+    node[
+        shape=record,
+        style=filled,
+        fillcolor=aliceblue
+    ]
+    nodesep = 0.3
+    edge[dir=black,arrowtail=empty]
+
+
+2503602535560 -> 2503602535056 [label="statements:0" arrowtail=diamond dir=both]
+2503602535056 -> 2503602536344 [label="exp" arrowtail=diamond dir=both]
+2503602536344 -> 2503602713376 [label="assignment" arrowtail=diamond dir=both]
+2503602713376 -> 2503602713208 [label="value" arrowtail=diamond dir=both]
+2503602713208[label="{:Expression|+literal:int=4\l}"]
+2503602713376[label="{:Assignment|+var:str='a'\l}"]
+2503602536344[label="{:Expression|}"]
+2503602535056 -> 2503602535952 [label="list:0" arrowtail=diamond dir=both]
+2503602535952 -> 2503602713432 [label="assignment" arrowtail=diamond dir=both]
+2503602713432 -> 2503602758768 [label="value" arrowtail=diamond dir=both]
+2503602758768[label="{:Expression|+literal:str='ana'\l}"]
+2503602713432[label="{:Assignment|+var:str='b'\l}"]
+2503602535952[label="{:Expression|}"]
+2503602535056 -> 2503602535224 [label="list:1" arrowtail=diamond dir=both]
+2503602535224 -> 2503602758712 [label="assignment" arrowtail=diamond dir=both]
+2503602758712 -> 2503602759048 [label="value" arrowtail=diamond dir=both]
+2503602759048[label="{:Expression|+literal:str='nil'\l}"]
+2503602758712[label="{:Assignment|+var:str='d'\l}"]
+2503602535224[label="{:Expression|}"]
+2503602535056 -> 2503602713264 [label="list:2" arrowtail=diamond dir=both]
+2503602713264 -> 2503602758880 [label="assignment" arrowtail=diamond dir=both]
+2503602758880 -> 2503602759160 [label="value" arrowtail=diamond dir=both]
+2503602759160[label="{:Expression|+literal:str='self'\l}"]
+2503602758880[label="{:Assignment|+var:str='e'\l}"]
+2503602713264[label="{:Expression|}"]
+2503602535056 -> 2503602713096 [label="list:3" arrowtail=diamond dir=both]
+2503602713096 -> 2503602759104 [label="assignment" arrowtail=diamond dir=both]
+2503602759104 -> 2503602757984 [label="value" arrowtail=diamond dir=both]
+2503602757984[label="{:Expression|+literal:str='super'\l}"]
+2503602759104[label="{:Assignment|+var:str='f'\l}"]
+2503602713096[label="{:Expression|}"]
+2503602535056 -> 2503602758824 [label="list:4" arrowtail=diamond dir=both]
+2503602758824 -> 2503602759272 [label="assignment" arrowtail=diamond dir=both]
+2503602759272 -> 2503602759440 [label="value" arrowtail=diamond dir=both]
+2503602759440[label="{:Expression|+literal:bool=True\l}"]
+2503602759272[label="{:Assignment|+var:str='g'\l}"]
+2503602758824[label="{:Expression|}"]
+2503602535056 -> 2503602758992 [label="list:5" arrowtail=diamond dir=both]
+2503602758992 -> 2503602759384 [label="assignment" arrowtail=diamond dir=both]
+2503602759384 -> 2503602759608 [label="value" arrowtail=diamond dir=both]
+2503602759608[label="{:Expression|+literal:bool=False\l}"]
+2503602759384[label="{:Assignment|+var:str='h'\l}"]
+2503602758992[label="{:Expression|}"]
+2503602535056[label="{:Expressions|}"]
+2503602535560[label="{:Program|}"]
+
+}

@@ -1,0 +1,70 @@
+
+    digraph textX {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+    node[
+        shape=record,
+        style=filled,
+        fillcolor=aliceblue
+    ]
+    nodesep = 0.3
+    edge[dir=black,arrowtail=empty]
+
+
+2503604813776 -> 2503602640768 [label="statements:0" arrowtail=diamond dir=both]
+2503602640768 -> 2503602642840 [label="exp" arrowtail=diamond dir=both]
+2503602642840 -> 2503602640040 [label="send" arrowtail=diamond dir=both]
+2503602640040 -> 2503602640880 [label="selector" arrowtail=diamond dir=both]
+2503602640880 -> 2503602676120 [label="msg" arrowtail=diamond dir=both]
+2503602676120[label="{:UnaryMessage|+unarySelector:str='squared'\l}"]
+2503602640880[label="{:UnaryTail|}"]
+2503602640040[label="{:UnarySend|+receiver:int=9\l}"]
+2503602642840[label="{:Expression|}"]
+2503602640768 -> 2503602641384 [label="list:0" arrowtail=diamond dir=both]
+2503602641384 -> 2503602641944 [label="send" arrowtail=diamond dir=both]
+2503602641944 -> 2503602679088 [label="selector" arrowtail=diamond dir=both]
+2503602679088 -> 2503602679536 [label="msg" arrowtail=diamond dir=both]
+2503602679536[label="{:UnaryMessage|+unarySelector:str='factorial'\l}"]
+2503602679088[label="{:UnaryTail|}"]
+2503602641944[label="{:UnarySend|+receiver:int=100\l}"]
+2503602641384[label="{:Expression|}"]
+2503602640768 -> 2503602639256 [label="list:1" arrowtail=diamond dir=both]
+2503602639256 -> 2503602640208 [label="send" arrowtail=diamond dir=both]
+2503602640208 -> 2503602677184 [label="selector" arrowtail=diamond dir=both]
+2503602677184 -> 2503602679760 [label="msg" arrowtail=diamond dir=both]
+2503602679760[label="{:UnaryMessage|+unarySelector:str='sin'\l}"]
+2503602677184[label="{:UnaryTail|}"]
+2503602640208[label="{:UnarySend|+receiver:int=89\l}"]
+2503602639256[label="{:Expression|}"]
+2503602640768 -> 2503602640432 [label="list:2" arrowtail=diamond dir=both]
+2503602640432 -> 2503602675840 [label="send" arrowtail=diamond dir=both]
+2503602675840 -> 2503602678976 [label="selector" arrowtail=diamond dir=both]
+2503602678976 -> 2503602678752 [label="msg" arrowtail=diamond dir=both]
+2503602678752[label="{:UnaryMessage|+unarySelector:str='size'\l}"]
+2503602678976[label="{:UnaryTail|}"]
+2503602675840[label="{:UnarySend|+receiver:str='blop'\l}"]
+2503602640432[label="{:Expression|}"]
+2503602640768 -> 2503602639592 [label="list:3" arrowtail=diamond dir=both]
+2503602639592 -> 2503602679032 [label="assignment" arrowtail=diamond dir=both]
+2503602679032 -> 2503602677464 [label="value" arrowtail=diamond dir=both]
+2503602677464 -> 2503602677632 [label="send" arrowtail=diamond dir=both]
+2503602677632 -> 2503602675952 [label="selector" arrowtail=diamond dir=both]
+2503602675952 -> 2503602677240 [label="msg" arrowtail=diamond dir=both]
+2503602677240[label="{:UnaryMessage|+unarySelector:str='factorial'\l}"]
+2503602675952[label="{:UnaryTail|}"]
+2503602677632[label="{:UnarySend|+receiver:int=10\l}"]
+2503602677464[label="{:Expression|}"]
+2503602679032[label="{:Assignment|+var:str='a'\l}"]
+2503602639592[label="{:Expression|}"]
+2503602640768 -> 2503602679256 [label="list:4" arrowtail=diamond dir=both]
+2503602679256 -> 2503602679480 [label="send" arrowtail=diamond dir=both]
+2503602679480 -> 2503602676456 [label="selector" arrowtail=diamond dir=both]
+2503602676456 -> 2503602676736 [label="msg" arrowtail=diamond dir=both]
+2503602676736[label="{:UnaryMessage|+unarySelector:str='today'\l}"]
+2503602676456[label="{:UnaryTail|}"]
+2503602679480[label="{:UnarySend|+receiver:str='Date'\l}"]
+2503602679256[label="{:Expression|}"]
+2503602640768[label="{:Expressions|}"]
+2503604813776[label="{:Program|}"]
+
+}

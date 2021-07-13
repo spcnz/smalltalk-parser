@@ -1,0 +1,22 @@
+
+    digraph textX {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+    node[
+        shape=record,
+        style=filled,
+        fillcolor=aliceblue
+    ]
+    nodesep = 0.3
+    edge[dir=black,arrowtail=empty]
+
+
+2503614617528 -> 2503614617752 [label="temps" arrowtail=diamond dir=both]
+2503614617752[label="{:Temps|+vars:list=['ana','izmedju']\l}"]
+2503614617528 -> 2503614618088 [label="statements:0" arrowtail=diamond dir=both]
+2503614618088 -> 2503614618200 [label="exp" arrowtail=diamond dir=both]
+2503614618200[label="{:Expression|+literal:int=12\l}"]
+2503614618088[label="{:Expressions|list:list=[]\l}"]
+2503614617528[label="{:Program|}"]
+
+}

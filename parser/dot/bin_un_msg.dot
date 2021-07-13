@@ -1,0 +1,50 @@
+
+    digraph textX {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+    node[
+        shape=record,
+        style=filled,
+        fillcolor=aliceblue
+    ]
+    nodesep = 0.3
+    edge[dir=black,arrowtail=empty]
+
+
+2503602760896 -> 2503604810192 [label="statements:0" arrowtail=diamond dir=both]
+2503604810192 -> 2503604810304 [label="exp" arrowtail=diamond dir=both]
+2503604810304 -> 2503604811480 [label="send" arrowtail=diamond dir=both]
+2503604811480 -> 2503604811312 [label="tail" arrowtail=diamond dir=both]
+2503604811312 -> 2503604811368 [label="msg" arrowtail=diamond dir=both]
+2503604811368 -> 2503604811592 [label="arg" arrowtail=diamond dir=both]
+2503604811592 -> 2503604811872 [label="selector" arrowtail=diamond dir=both]
+2503604811872 -> 2503604811984 [label="msg" arrowtail=diamond dir=both]
+2503604811984[label="{:UnaryMessage|+unarySelector:str='factorial'\l}"]
+2503604811872[label="{:UnaryTail|}"]
+2503604811592[label="{:UnarySend|+receiver:int=2\l}"]
+2503604811368[label="{:BinaryMessage|+selector:str='+'\l}"]
+2503604811312[label="{:BinaryTail|}"]
+2503604811480[label="{:BinarySend|+receiver:int=1\l}"]
+2503604810304[label="{:Expression|}"]
+2503604810192 -> 2503604810416 [label="list:0" arrowtail=diamond dir=both]
+2503604810416 -> 2503604810528 [label="send" arrowtail=diamond dir=both]
+2503604810528 -> 2503604810640 [label="receiver" arrowtail=diamond dir=both]
+2503604810640 -> 2503604811816 [label="selector" arrowtail=diamond dir=both]
+2503604811816 -> 2503604812040 [label="msg" arrowtail=diamond dir=both]
+2503604812040[label="{:UnaryMessage|+unarySelector:str='class'\l}"]
+2503604811816 -> 2503604812096 [label="tail" arrowtail=diamond dir=both]
+2503604812096 -> 2503604812152 [label="msg" arrowtail=diamond dir=both]
+2503604812152[label="{:UnaryMessage|+unarySelector:str='maxVal'\l}"]
+2503604812096[label="{:UnaryTail|}"]
+2503604811816[label="{:UnaryTail|}"]
+2503604810640[label="{:UnarySend|+receiver:int=1\l}"]
+2503604810528 -> 2503604810920 [label="tail" arrowtail=diamond dir=both]
+2503604810920 -> 2503604811928 [label="msg" arrowtail=diamond dir=both]
+2503604811928[label="{:BinaryMessage|+selector:str='+'\l+arg:int=1\l}"]
+2503604810920[label="{:BinaryTail|}"]
+2503604810528[label="{:BinarySend|}"]
+2503604810416[label="{:Expression|}"]
+2503604810192[label="{:Expressions|}"]
+2503602760896[label="{:Program|}"]
+
+}

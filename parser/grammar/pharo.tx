@@ -3,7 +3,7 @@ Program:
     ;
 
 Temps :
-     PIPE (ws? ID)+ ws? PIPE
+     PIPE (ws? vars=ID)+ ws? PIPE
    ;
 Statement :
     ReturnStatement ws?
@@ -11,22 +11,21 @@ Statement :
     | Expressions PERIOD? ws?
 ;
 ReturnStatement:
-    '^' ws? Expression ws? PERIOD?
+    '^' ws? return = Expression ws? PERIOD?
 ;
 Expressions:
-    Expression ExpressionList*
+    exp=Expression (ws? PERIOD ws? list=Expression)*
 ;
-
-ExpressionList: PERIOD ws? Expression;
 
 Expression:
-     literal = Literal
-    | AssignmentExpression
-    | Cascade
-    | BinarySend
+      assignment=Assignment
+    | cascade=Cascade
+    | send=BinarySend
+    | send=UnarySend
+    | literal = Literal
 ;
 
-AssignmentExpression :
+Assignment :
     var = ID ws? ':=' ws? value = Expression
 ;
 
@@ -40,25 +39,27 @@ Message:
 ;
 
 BinarySend:
-    UnarySend BinaryTail?
+    (receiver=UnarySend | receiver=Receiver) ws? tail=BinaryTail
 ;
 
 UnarySend:
-    receiver=Receiver ws? selector=UnaryTail?
+    receiver=Receiver ws? selector=UnaryTail
 ;
 
 UnaryTail:
-    UnaryMessage ws? UnaryTail? ws?
+    msg=UnaryMessage ws? tail=UnaryTail? ws?
 ;
 
 UnaryMessage:
     ws? unarySelector=ID
 ;
+
+BinaryTail : msg=BinaryMessage tail=BinaryTail?;
+
 BinaryMessage:
-    receiver=Receiver ws? selector=BINARY_SELECTOR ws? arg=[UnarySend | Receiver]
+    ws? selector=BINARY_SELECTOR ws? (arg=UnarySend | arg=Literal)
 ;
 
-BinaryTail : BinaryMessage BinaryTail?;
 
 Receiver:
 	Literal
@@ -82,18 +83,19 @@ CommentPharo:
 ;
 
 Literal :
-    	NUMBER  
+    	NUMBER
 	|	STRING
-	|   Nil 
-    |   Self 
+	|   NIL
+    |   SELF
     |   BOOL
+    |   SUPER
 ;
 
 ws : (SEPARATOR | CommentPharo)+;
 
-Self   : 'self' ;
-Super  : 'super' ;
-Nil    : 'nil' ;
+SELF   : 'self' ;
+SUPER  : 'super' ;
+NIL    : 'nil' ;
 PERIOD : '.';
 SEPARATOR : /[ \t\r\n]/;
 PIPE : '|' ;

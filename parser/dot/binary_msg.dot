@@ -1,0 +1,46 @@
+
+    digraph textX {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+    node[
+        shape=record,
+        style=filled,
+        fillcolor=aliceblue
+    ]
+    nodesep = 0.3
+    edge[dir=black,arrowtail=empty]
+
+
+2503602535168 -> 2503602759944 [label="statements:0" arrowtail=diamond dir=both]
+2503602759944 -> 2503602760560 [label="exp" arrowtail=diamond dir=both]
+2503602760560 -> 2503602759328 [label="send" arrowtail=diamond dir=both]
+2503602759328 -> 2503602760056 [label="tail" arrowtail=diamond dir=both]
+2503602760056 -> 2503602760672 [label="msg" arrowtail=diamond dir=both]
+2503602760672[label="{:BinaryMessage|+selector:str='+'\l+arg:int=2\l}"]
+2503602760056[label="{:BinaryTail|}"]
+2503602759328[label="{:BinarySend|+receiver:int=1\l}"]
+2503602760560[label="{:Expression|}"]
+2503602759944 -> 2503602759216 [label="list:0" arrowtail=diamond dir=both]
+2503602759216 -> 2503602760840 [label="send" arrowtail=diamond dir=both]
+2503602760840 -> 2503602761512 [label="tail" arrowtail=diamond dir=both]
+2503602761512 -> 2503602761624 [label="msg" arrowtail=diamond dir=both]
+2503602761624[label="{:BinaryMessage|+selector:str='*'\l+arg:int=10\l}"]
+2503602761512[label="{:BinaryTail|}"]
+2503602760840[label="{:BinarySend|+receiver:int=1\l}"]
+2503602759216[label="{:Expression|}"]
+2503602759944 -> 2503602760616 [label="list:1" arrowtail=diamond dir=both]
+2503602760616 -> 2503602760784 [label="assignment" arrowtail=diamond dir=both]
+2503602760784 -> 2503602761680 [label="value" arrowtail=diamond dir=both]
+2503602761680 -> 2503604810136 [label="send" arrowtail=diamond dir=both]
+2503604810136 -> 2503604810360 [label="tail" arrowtail=diamond dir=both]
+2503604810360 -> 2503604810472 [label="msg" arrowtail=diamond dir=both]
+2503604810472[label="{:BinaryMessage|+selector:str='+'\l+arg:int=10\l}"]
+2503604810360[label="{:BinaryTail|}"]
+2503604810136[label="{:BinarySend|+receiver:int=7\l}"]
+2503602761680[label="{:Expression|}"]
+2503602760784[label="{:Assignment|+var:str='a'\l}"]
+2503602760616[label="{:Expression|}"]
+2503602759944[label="{:Expressions|}"]
+2503602535168[label="{:Program|}"]
+
+}
