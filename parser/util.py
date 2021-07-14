@@ -1,7 +1,7 @@
 import os
 import time
 from subprocess import check_call
-
+from lsp_model import Location, Range, Position
 from textx.export import model_export
 
 def write_errors(func):
@@ -42,3 +42,11 @@ def calculate_time(func):
         return result
 
     return wrapper
+
+
+def parse_location(tx_location, entity):
+    start_pos = Position(tx_location['line'], tx_location['col'])
+    end_pos = Position(tx_location['line'], tx_location['col'] + len(entity))
+    range = Range(start_pos, end_pos)
+
+    return Location(tx_location['filename'], range)

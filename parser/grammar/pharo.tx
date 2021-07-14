@@ -11,7 +11,7 @@ Statement :
     | Expressions PERIOD? ws?
 ;
 ReturnStatement:
-    '^' ws? return = Expression ws? PERIOD?
+    '^' ws? returnExp=Expression ws? PERIOD?
 ;
 
 Expressions:
@@ -20,7 +20,7 @@ Expressions:
 
 Expression:
       assignment=Assignment
-    | cascade=Cascade
+    | send=Cascade
     | send=KeywordSend
     | send=BinarySend
     | send=UnarySend

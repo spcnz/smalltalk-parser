@@ -2,7 +2,7 @@
 
 #(1 2 -4 -86) do: [ :each | Transcript show: each abs printString; cr ].
 
-fct := [ :x :y | |z| x * x + 3 ].
+fct := [ :x :y | |z| x * x + 3 . a factorial ].
 
 fct value: 2.
 

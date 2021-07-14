@@ -57,7 +57,7 @@ class Document(object) :
         return self.__model
 
     @write_errors
-    @convert_to_png
+    # @convert_to_png
     def parse_model(self, meta_model):
         try:
             model = meta_model.model_from_file(self.__uri)

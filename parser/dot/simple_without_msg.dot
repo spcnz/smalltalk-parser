@@ -11,12 +11,12 @@
     edge[dir=black,arrowtail=empty]
 
 
-2169898794904 -> 2169898794512 [label="temps" arrowtail=diamond dir=both]
-2169898794512[label="{:Temps|+vars:list=['ana','izmedju']\l}"]
-2169898794904 -> 2169901686856 [label="statements:0" arrowtail=diamond dir=both]
-2169901686856 -> 2169901686968 [label="exp" arrowtail=diamond dir=both]
-2169901686968[label="{:Expression|+literal:int=12\l}"]
-2169901686856[label="{:Expressions|list:list=[]\l}"]
-2169898794904[label="{:Program|}"]
+1970553327232 -> 1970556285000 [label="temps" arrowtail=diamond dir=both]
+1970556285000[label="{:Temps|+vars:list=['ana','izmedju']\l}"]
+1970553327232 -> 1970556285112 [label="statements:0" arrowtail=diamond dir=both]
+1970556285112 -> 1970556285224 [label="exp" arrowtail=diamond dir=both]
+1970556285224[label="{:Expression|+literal:int=12\l}"]
+1970556285112[label="{:Expressions|list:list=[]\l}"]
+1970553327232[label="{:Program|}"]
 
 }

@@ -3,3 +3,4 @@ parser/.idea
 parser/venv
 
 .idea
+*.pyc
