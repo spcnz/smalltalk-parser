@@ -59,7 +59,7 @@ UnaryTail:
 ;
 
 UnaryMessage:
-    ws? unarySelector=IDENTIFIER
+    ws? selector=IDENTIFIER
 ;
 
 BinaryTail : msg=BinaryMessage tail=BinaryTail?;

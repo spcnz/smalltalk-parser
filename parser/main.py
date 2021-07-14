@@ -1,6 +1,8 @@
 import os
 from fnmatch import fnmatch
 from textx import metamodel_from_file
+
+from lsp_model import Position
 from model import Document, Workspace
 from util import calculate_time
 from pathos.multiprocessing import ProcessingPool as Pool
@@ -67,13 +69,16 @@ def start():
     workspace = load_workspace(root, meta_model)
 
 
-    documentUri = "examples\\messages\\unary_msg.st"
 
-    #hocu da nadjem poruku factorial
-    position = {
-        'line': 10,
-        'character': 5
-    }
+    documentUri = "examples\\complex\\cascade.st"
+
+    #hocu da nadjem poruku +
+    # documentUri = "examples\\messages\\keyword_msg.st"
+    # position = Position(line=3, character=15)
+
+    #FACTORIAL
+    position = Position(line=10, character=5)
+    documentUri = "examples\\messages\\unary_msg.st"
 
     result = find_all_references(documentUri, workspace, position)
     for loc in result:
