@@ -1,5 +1,9 @@
 from textx import TextXSyntaxError
+import logging
+from logdecorator import log_on_start, log_on_error
 from util import *
+
+logging.basicConfig(level=logging.DEBUG)
 
 class Workspace(object):
     def __init__(self, root_uri, meta_model):
@@ -57,14 +61,15 @@ class Document(object) :
         return self.__model
 
     @write_errors
-    # @convert_to_png
+    @convert_to_png
+    @log_on_start(logging.DEBUG, "Start parsing doc {self.uri:s}...")
     def parse_model(self, meta_model):
         try:
             model = meta_model.model_from_file(self.__uri)
             self.__model = model
 
         except TextXSyntaxError as err:
-            print("Syntax error in file : ", self.__uri)
+            logging.error("\nSyntax error in file : {0}\n".format(self.__uri), exc_info=False)
             self.__errors.append(err)
 
         return self.__errors, self.__uri, self.__model

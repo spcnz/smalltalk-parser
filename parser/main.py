@@ -1,50 +1,26 @@
+import itertools
 import os
 from fnmatch import fnmatch
 from textx import metamodel_from_file
-
 from lsp_model import Position
 from model import Document, Workspace
 from util import calculate_time
-from pathos.multiprocessing import ProcessingPool as Pool
+from multiprocessing import *
+from multiprocessing.dummy import Pool as ThreadPool
 from find_references import find_all_references
 
-
 @calculate_time
-def parse_all_parallel(workspace):
-    with Pool() as pool:
-        pool.map(parse_doc, list(workspace.documents.values()))
+def parse_all_parallel(workspace, meta_model):
 
+    pool = ThreadPool(8)
+    pool.starmap(parse_doc, zip(itertools.repeat(meta_model), list(workspace.documents.values())))
 
+    # with Pool() as pool:
+    #     pool.map(parse_doc, list(workspace.documents.values()))
 
-    # p = Process(target=f, args=(q,))
-    # manager = Manager()
-    # return_dict = manager.dict()
-    # jobs = []
-    # for doc in workspace.documents.values():
-    #     p =  Process(target=parse_doc, args=(doc,q))
-    #     jobs.append(p)
-    #     p.start()
-
-
-    # with concurrent.futures.ThreadPoolExecutor(max_workers=13) as executor:
-    #     executor.map(parse_doc, list(workspace.documents.values()))
-    # num = 0
-    # # for doc in workspace.documents.values():
-    # #     # print('a odje', doc.model)
-    # #     if (doc.model == None):
-    # #         # print (doc.uri,  'OVO NIJE PARSIRAO ZASTO?')
-    # #         num += 1
-    #
-    # print("Ukupno dokumenata : ", len(workspace.documents))
-    # print("Neparsirano : ", num)
-
-def parse_doc(doc):
-    meta_model = metamodel_from_file("grammar/pharo.tx")
+def parse_doc(meta_model, doc):
+        # meta_model = metamodel_from_file("grammar/pharo.tx")
     doc.parse_model(meta_model)
-    print('parsiran? ', doc.model != None)
-
-    return doc
-
 
 def load_workspace(root, meta_model):
     workspace = Workspace(root, meta_model)
@@ -57,25 +33,24 @@ def load_workspace(root, meta_model):
                 workspace.add_document(doc)
 
 
-    workspace.parse_all()
-    # parse_all_parallel(workspace)
+    # workspace.parse_all()
+    parse_all_parallel(workspace, meta_model)
 
     return workspace
 
 def start():
-
+    print(cpu_count())
     root = 'examples\\'
     meta_model = metamodel_from_file("grammar/pharo.tx")
     workspace = load_workspace(root, meta_model)
-
-
-
-    documentUri = "examples\\complex\\cascade.st"
-
-    #hocu da nadjem poruku +
-    # documentUri = "examples\\messages\\keyword_msg.st"
-    # position = Position(line=3, character=15)
-
+    print("===============================")
+    #
+    # documentUri = "examples\\complex\\cascade.st"
+    #
+    # #hocu da nadjem poruku +
+    # # documentUri = "examples\\messages\\keyword_msg.st"
+    # # position = Position(line=3, character=15)
+    #
     #FACTORIAL
     position = Position(line=10, character=5)
     documentUri = "examples\\messages\\unary_msg.st"

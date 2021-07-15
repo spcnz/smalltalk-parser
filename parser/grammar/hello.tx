@@ -1,0 +1,6 @@
+HelloWordModel:
+    'hello' to_whom+=Who
+;
+
+Who : value=NUMBER
+;

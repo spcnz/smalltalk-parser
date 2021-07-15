@@ -1,10 +1,10 @@
 from textx.model import get_location, get_children
 from util import parse_location, calculate_time
-
+from multiprocessing import Pool
+from functools import partial
 
 @calculate_time
 def find_all_references(doc_uri, workspace, position):
-
     entity = find_entity(workspace.documents[doc_uri], position)
     print("FINDING MESSAGE : ", entity)
     result = []
@@ -13,11 +13,14 @@ def find_all_references(doc_uri, workspace, position):
         if reference_list:
             result += reference_list
 
-    return result
 
+
+    # print(lista)
+    return result
 
 def find_reference_in_doc(doc, entity):
     result = []
+    a = 1
     if doc.is_valid_model:
         messages = get_children(check_type, doc.model)
         for msg in messages:
