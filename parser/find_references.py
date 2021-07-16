@@ -1,7 +1,5 @@
 from textx.model import get_location, get_children
 from util import parse_location, calculate_time
-from multiprocessing import Pool
-from functools import partial
 
 @calculate_time
 def find_all_references(doc_uri, workspace, position):
@@ -13,9 +11,6 @@ def find_all_references(doc_uri, workspace, position):
         if reference_list:
             result += reference_list
 
-
-
-    # print(lista)
     return result
 
 def find_reference_in_doc(doc, entity):
