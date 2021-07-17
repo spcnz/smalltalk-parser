@@ -1,12 +1,13 @@
 import traceback
 from lsp_model import *
-from st_parser import create_parser
+from st_parser import create_parser, parse_doc
 import socketserver
 from enum import Enum
 from find_references import  find_all_references
 
 
 workspace = None
+meta_model = None
 
 class MethodName(Enum):
         CREATE_PARSER = "createParser"
@@ -34,7 +35,8 @@ class TCPHandler(socketserver.BaseRequestHandler):
 
         if request.method == MethodName.CREATE_PARSER.value:
             global workspace
-            workspace = create_parser(params['uri'])
+            global meta_model
+            workspace, meta_model = create_parser(params['uri'])
 
         elif request.method == MethodName.FIND_REFERENCES.value:
             position = Position(params['position']['line'], params['position']['character'])
@@ -44,7 +46,8 @@ class TCPHandler(socketserver.BaseRequestHandler):
             return result
 
         elif request.method == MethodName.CHANGED_DOCUMENT.value:
-            pass
+            documentUri = params['textDocument']['uri']
+            parse_doc(meta_model, workspace.documents[documentUri])
 
 
     def handle(self):

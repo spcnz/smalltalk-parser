@@ -30,10 +30,6 @@ func (t *LSPService) DidOpen(r *http.Request, args *TextDocumentIdentifier, resu
 	return nil
 }
 
-type Response struct {
-	Result string
-}
-
 //FIND REFERENCES
 func (t *LSPService) References(r *http.Request, args *ReferenceParams, result *interface{}) error {
 
@@ -45,6 +41,21 @@ func (t *LSPService) References(r *http.Request, args *ReferenceParams, result *
 	*result = response
 
 	return nil
+}
+
+//DOCUMENT DID CHANGE
+func (t *LSPService) DidChange(r *http.Request, args *DidChangeTextDocumentParams, result *RPCResponse) error {
+
+	var (
+		ip   = "127.0.0.1"
+		port = 9999
+	)
+	changedDocSocket(ip, port, args)
+	return nil
+}
+
+type Response struct {
+	Result string
 }
 
 func createParserSocket(ip string, port int, params *TextDocumentIdentifier) {
@@ -59,6 +70,30 @@ func createParserSocket(ip string, port int, params *TextDocumentIdentifier) {
 	defer conn.Close()
 
 	notification := NewRPCNotificationObject(CREATE_PARSER, params)
+
+	//SENDING DATA
+	error_enc := enc.NewEncoder(conn).Encode(notification)
+	log.Printf("NOTIFICATION ")
+	log.Printf("Send method: %s", notification.Method)
+	log.Printf("Send params: %s", notification.Params)
+
+	if error_enc != nil {
+		log.Print("Error while converting notification to json : ", error_enc)
+	}
+}
+
+func changedDocSocket(ip string, port int, params *DidChangeTextDocumentParams) {
+	addr := strings.Join([]string{ip, strconv.Itoa(port)}, ":")
+	conn, err := net.Dial("tcp", addr)
+
+	if err != nil {
+		log.Fatalln(err)
+		os.Exit(1)
+	}
+
+	defer conn.Close()
+
+	notification := NewRPCNotificationObject(CHANGED_DOCUMENT, params)
 
 	//SENDING DATA
 	error_enc := enc.NewEncoder(conn).Encode(notification)
@@ -105,6 +140,8 @@ func findReferencesSocket(ip string, port int, params *ReferenceParams) interfac
 
 		return response
 	} else {
+		log.Print("Received data!")
+
 		return response.Locations
 	}
 }

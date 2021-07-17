@@ -70,3 +70,12 @@ type ReferenceParams struct {
 type ReferenceResponse struct {
 	Locations []Location `json:"locations"`
 }
+
+type ContentChanges struct {
+	Text string `json:"text"`
+}
+
+type DidChangeTextDocumentParams struct {
+	TextDocument   TextDocumentIdentifier `json:"textDocument"`
+	ContentChanges ContentChanges         `json:"contentChanges"`
+}

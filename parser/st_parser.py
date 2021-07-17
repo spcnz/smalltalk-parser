@@ -38,4 +38,4 @@ def create_parser(root):
     meta_model = metamodel_from_file("grammar/pharo.tx")
     workspace = load_workspace(root, meta_model)
 
-    return workspace
+    return workspace, meta_model
