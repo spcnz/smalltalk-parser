@@ -13,11 +13,13 @@ def parse_all_parallel(workspace, meta_model):
     pool.starmap(parse_doc, zip(itertools.repeat(meta_model), list(workspace.documents.values())))
 
     # with Pool() as pool:
-    #     pool.map(parse_doc, list(workspace.documents.values()))
+    #     result = pool.map(parse_doc, list(workspace.documents.values()))
 
 def parse_doc(meta_model, doc):
         # meta_model = metamodel_from_file("grammar/pharo.tx")
     doc.parse_model(meta_model)
+
+    # return doc
 
 def load_workspace(root, meta_model):
     workspace = Workspace(root, meta_model)

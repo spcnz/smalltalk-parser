@@ -1,7 +1,5 @@
 package main
 
-import "encoding/json"
-
 type MethodName string
 
 type LSPService struct{}
@@ -11,9 +9,18 @@ const (
 )
 
 const (
-	CREATE_PARSER    MethodName = "createParser"
-	FIND_REFERENCES  MethodName = "findReferences"
-	CHANGED_DOCUMENT MethodName = "changedDocument"
+	FIND_REFERENCES  MethodName = "textDocument/references"
+	CHANGED_DOCUMENT MethodName = "textDocument/didChange"
+	INITIALIZE       MethodName = "initialize"
+	INITIALIZED      MethodName = "initialized"
+)
+
+type TextDocumentKind int
+
+const (
+	NONE        TextDocumentKind = 0
+	FULL        TextDocumentKind = 1
+	INCREMENTAL TextDocumentKind = 2
 )
 
 type TextDocumentIdentifier struct {
@@ -24,7 +31,7 @@ type RPCRequest struct {
 	JSONRPC string      `json:"jsonrpc"`
 	Method  string      `json:"method"`
 	Params  interface{} `json:"params,omitempty"`
-	ID      string      `json:"id"`
+	ID      int         `json:"id"`
 }
 
 type RPCNotification struct {
@@ -36,8 +43,7 @@ type RPCNotification struct {
 type RPCResponse struct {
 	JSONRPC string      `json:"jsonrpc"`
 	Result  interface{} `json:"result,omitempty"`
-	Error   *RPCError   `json:"error,omitempty"`
-	ID      string      `json:"id"`
+	ID      int         `json:"id"`
 }
 
 type RPCError struct {
@@ -48,8 +54,8 @@ type RPCError struct {
 
 //REFERENCES
 type Position struct {
-	Line      json.Number `json:"line"`
-	Character json.Number `json:"character"`
+	Line      float64 `json:"line"`
+	Character float64 `json:"character"`
 }
 
 type Range struct {
@@ -78,4 +84,14 @@ type ContentChanges struct {
 type DidChangeTextDocumentParams struct {
 	TextDocument   TextDocumentIdentifier `json:"textDocument"`
 	ContentChanges ContentChanges         `json:"contentChanges"`
+	Version        int                    `json:"version"`
+}
+
+type InitializeResult struct {
+	Capabilities ServerCapabilities `json:"capabilities,omitempty"`
+}
+
+type ServerCapabilities struct {
+	TextDocumentSync  TextDocumentKind `json:"textDocumentSync"`
+	ReferenceProvider bool             `json:"referencesProvider"`
 }

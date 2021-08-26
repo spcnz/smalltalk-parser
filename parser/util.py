@@ -50,3 +50,13 @@ def parse_location(tx_location, entity):
     range = Range(start_pos, end_pos)
 
     return Location(tx_location['filename'], range)
+
+def _content_length(line):
+    """Extract the content length from an input line."""
+    if line.startswith(b'Content-Length: '):
+        _, value = line.split(b'Content-Length: ')
+        value = value.strip()
+        try:
+            return int(value)
+        except ValueError:
+            raise ValueError("Invalid Content-Length header: {}".format(value))

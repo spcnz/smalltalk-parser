@@ -1,193 +1,115 @@
 package main
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
-	"log"
 	"net"
-	"net/http"
-	"os"
-	"strconv"
-	"strings"
 
-	enc "encoding/json"
-
-	"github.com/gorilla/mux"
-	"github.com/gorilla/rpc"
-	"github.com/gorilla/rpc/json"
-	uuid "github.com/nu7hatch/gouuid"
+	"github.com/mitchellh/mapstructure"
+	"github.com/sourcegraph/go-lsp"
 )
 
-var ID uint
+var server LanguageServer = LanguageServer{}
 
-//DOCUMENT DID OPEN
-func (t *LSPService) DidOpen(r *http.Request, args *TextDocumentIdentifier, result *RPCResponse) error {
+func NewRPCResponseObject(id int, result interface{}, jsonrpc string) *RPCResponse {
 
-	var (
-		ip   = "127.0.0.1"
-		port = 9999
-	)
-	createParserSocket(ip, port, args)
-	return nil
-}
-
-//FIND REFERENCES
-func (t *LSPService) References(r *http.Request, args *ReferenceParams, result *interface{}) error {
-
-	var (
-		ip   = "127.0.0.1"
-		port = 9999
-	)
-	response := findReferencesSocket(ip, port, args)
-	*result = response
-
-	return nil
-}
-
-//DOCUMENT DID CHANGE
-func (t *LSPService) DidChange(r *http.Request, args *DidChangeTextDocumentParams, result *RPCResponse) error {
-
-	var (
-		ip   = "127.0.0.1"
-		port = 9999
-	)
-	changedDocSocket(ip, port, args)
-	return nil
-}
-
-type Response struct {
-	Result string
-}
-
-func createParserSocket(ip string, port int, params *TextDocumentIdentifier) {
-	addr := strings.Join([]string{ip, strconv.Itoa(port)}, ":")
-	conn, err := net.Dial("tcp", addr)
-
-	if err != nil {
-		log.Fatalln(err)
-		os.Exit(1)
-	}
-
-	defer conn.Close()
-
-	notification := NewRPCNotificationObject(CREATE_PARSER, params)
-
-	//SENDING DATA
-	error_enc := enc.NewEncoder(conn).Encode(notification)
-	log.Printf("NOTIFICATION ")
-	log.Printf("Send method: %s", notification.Method)
-	log.Printf("Send params: %s", notification.Params)
-
-	if error_enc != nil {
-		log.Print("Error while converting notification to json : ", error_enc)
+	return &RPCResponse{
+		ID:      id,
+		Result:  result,
+		JSONRPC: jsonrpc,
 	}
 }
 
-func changedDocSocket(ip string, port int, params *DidChangeTextDocumentParams) {
-	addr := strings.Join([]string{ip, strconv.Itoa(port)}, ":")
-	conn, err := net.Dial("tcp", addr)
-
-	if err != nil {
-		log.Fatalln(err)
-		os.Exit(1)
-	}
-
-	defer conn.Close()
-
-	notification := NewRPCNotificationObject(CHANGED_DOCUMENT, params)
-
-	//SENDING DATA
-	error_enc := enc.NewEncoder(conn).Encode(notification)
-	log.Printf("NOTIFICATION ")
-	log.Printf("Send method: %s", notification.Method)
-	log.Printf("Send params: %s", notification.Params)
-
-	if error_enc != nil {
-		log.Print("Error while converting notification to json : ", error_enc)
-	}
-}
-
-func findReferencesSocket(ip string, port int, params *ReferenceParams) interface{} {
-	addr := strings.Join([]string{ip, strconv.Itoa(port)}, ":")
-	conn, err := net.Dial("tcp", addr)
-
-	if err != nil {
-		log.Fatalln(err)
-		os.Exit(1)
-	}
-
-	defer conn.Close()
-
-	request := NewRPCRequestObject(FIND_REFERENCES, params)
-	fmt.Print("\nID : \n", request.ID)
-
-	//SENDING DATA
-	error_enc := enc.NewEncoder(conn).Encode(request)
-	log.Printf("REQUEST ")
-	log.Printf("Send method: %s", request.Method)
-	log.Printf("Send params: %s", request.Params)
-
-	if error_enc != nil {
-		log.Print("Error while converting request to json : ", error_enc)
-	}
-
-	//RECEIVING DATA
-	var response *ReferenceResponse
-
-	error_dec := enc.NewDecoder(conn).Decode(&response)
-
-	if error_dec != nil {
-		log.Print("Error while converting response from bytes to json : ", error_dec)
-
-		return response
+func handleNotification(not *RPCNotification) error {
+	if not.Method == string(INITIALIZED) {
+		return server.initialized(not)
+	} else if not.Method == string(CHANGED_DOCUMENT) {
+		return server.textDocumentDidChange(not)
 	} else {
-		log.Print("Received data!")
-
-		return response.Locations
+		return errors.New("METHOD NOT FOUND")
 	}
 }
 
-func NewRPCNotificationObject(method MethodName, params ...interface{}) *RPCNotification {
-	rpcNotification := RPCNotification{
-		JSONRPC: "2.0",
-		Method:  string(method),
-		Params:  params,
-	}
+func handleRequest(req *RPCRequest) (*RPCResponse, error) {
+	if req.Method == string(INITIALIZE) {
+		var params *lsp.InitializeParams = &lsp.InitializeParams{}
+		mapstructure.Decode(req.Params, &params)
+		var result = server.initialize(params)
+		var responseBody = NewRPCResponseObject(req.ID, result, req.JSONRPC)
 
-	if len(params) == 0 {
-		rpcNotification.Params = nil
-	}
+		return responseBody, nil
+	} else if req.Method == string(FIND_REFERENCES) {
+		var result = server.findReferences(req)
+		var responseBody = NewRPCResponseObject(req.ID, result, req.JSONRPC)
 
-	return &rpcNotification
+		return responseBody, nil
+	} else {
+		return nil, errors.New("METHOD NOT FOUND")
+	}
 }
 
-func NewRPCRequestObject(method MethodName, params ...interface{}) *RPCRequest {
-	u, err := uuid.NewV4()
+func handleMsg(msg []byte) (*RPCResponse, error) {
+	var req *RPCRequest = &RPCRequest{}
+	var not *RPCNotification = &RPCNotification{}
+	var m = make(map[string]interface{})
+	err := json.Unmarshal(msg, &m)
 	if err != nil {
-		fmt.Print("Error while generating unique ID.")
+		fmt.Println("Error while decoding it to map : ", err.Error())
+		return nil, err
 	}
-	rpcRequest := RPCRequest{
-		ID:      u.String(),
-		JSONRPC: "2.0",
-		Method:  string(method),
-		Params:  params,
+	//check if it's a request or notification message
+	if _, ok := m["id"]; ok {
+		mapstructure.Decode(m, &req)
+		return handleRequest(req)
+	} else {
+		mapstructure.Decode(m, &not)
+		return nil, handleNotification(not)
 	}
-
-	return &rpcRequest
 }
 
 func main() {
-
-	rpcServer := rpc.NewServer()
-
-	rpcServer.RegisterCodec(json.NewCodec(), "application/json")
-	rpcServer.RegisterCodec(json.NewCodec(), "application/json;charset=UTF-8")
-
-	service := new(LSPService)
-
-	rpcServer.RegisterService(service, "textDocument")
-
-	router := mux.NewRouter()
-	router.Handle("/", rpcServer)
-	http.ListenAndServe(":8000", router)
-
+	fmt.Println("Start server...")
+	ln, _ := net.Listen("tcp", "localhost:8013")
+	conn, _ := ln.Accept()
+	buff := make([]byte, 512)
+	var headerFound bool = false
+	var savedData []byte = nil
+	var size int = 512
+	var err error = nil
+	var response *RPCResponse = nil
+	for {
+		fmt.Println("READING ....")
+		n, _ := conn.Read(buff)
+		if !headerFound {
+			size, savedData, err = readHeader(buff, n)
+			if err != nil {
+				fmt.Println("Error while getting header : ", err.Error())
+			} else {
+				headerFound = true
+				buff = make([]byte, size)
+			}
+		} else {
+			//header is found read rest of msg
+			var message []byte
+			//if some data is read with header part append it to rest of message
+			if savedData != nil {
+				message = append(savedData, buff...)
+			} else {
+				message = buff
+			}
+			fmt.Println(string(message))
+			fmt.Println()
+			response, err = handleMsg(message)
+			if err == nil {
+				if response != nil {
+					conn.Write(format(response))
+				}
+			} else {
+				fmt.Println("Error : ", err.Error())
+			}
+			buff = make([]byte, 512)
+			headerFound = false
+		}
+	}
 }
