@@ -1,0 +1,1 @@
+Expected ':=' or ID or '+' or '*' or '=' or '<<' or '>' or '<' or ',' or '@' or '%' or '~' or PIPE or '&' or '-' or '/' or '?' or '\\' or '.' or PERIOD or EOF at position c:\Users\vincitoressa\Desktop\smalltalk-parser\parser\examples\simple\return_stm.st:(3, 1) => '^ a  *1 + 2.'.

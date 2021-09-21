@@ -1,0 +1,1 @@
+Expected Not or ID or '+' or '*' or '=' or '<<' or '>' or '<' or ',' or '@' or '%' or '~' or PIPE or '&' or '-' or '/' or '?' or '\\' or ';' or '.' or PERIOD or EOF at position C:\Users\vincitoressa\Desktop\smalltalk-parser\parser\examples\complex\class.st:(6, 1) => 'jects'  *1 + 2.'.

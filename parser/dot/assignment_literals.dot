@@ -1,0 +1,42 @@
+
+    digraph textX {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+    node[
+        shape=record,
+        style=filled,
+        fillcolor=aliceblue
+    ]
+    nodesep = 0.3
+    edge[dir=black,arrowtail=empty]
+
+
+2614587546760 -> 2614581199872 [label="statements:0" arrowtail=diamond dir=both]
+2614581199872 -> 2614581200936 [label="value" arrowtail=diamond dir=both]
+2614581200936[label="{:CHARACTER|+value:str='c'\l}"]
+2614581199872[label="{:Assignment|+var:str='А'\l}"]
+2614587546760 -> 2614581199648 [label="statements:1" arrowtail=diamond dir=both]
+2614581199648 -> 2614581199816 [label="value" arrowtail=diamond dir=both]
+2614581199816[label="{:Symbol|+value:str='hello'\l}"]
+2614581199648[label="{:Assignment|+var:str='B'\l}"]
+2614587546760 -> 2614581202616 [label="statements:2" arrowtail=diamond dir=both]
+2614581202616 -> 2614581202112 [label="value" arrowtail=diamond dir=both]
+2614581202112[label="{:LiteralArray|+array:list=[1,2,3]\l}"]
+2614581202616[label="{:Assignment|+var:str='C'\l}"]
+2614587546760 -> 2614581199760 [label="statements:3" arrowtail=diamond dir=both]
+2614581199760 -> 2614581200600 [label="value" arrowtail=diamond dir=both]
+2614581200600 -> 2614581199592 [label="type" arrowtail=diamond dir=both]
+2614581199592 -> 2614581199312 [label="exp:0" arrowtail=diamond dir=both]
+2614581199312 -> 2614585209576 [label="tail" arrowtail=diamond dir=both]
+2614585209576 -> 2614588196624 [label="msg" arrowtail=diamond dir=both]
+2614588196624[label="{:BinaryMessage|+selector:str='+'\l+arg:int=2\l}"]
+2614585209576[label="{:BinaryTail|}"]
+2614581199312[label="{:BinarySend|+receiver:int=1\l}"]
+2614581199592 -> "2:int" [label="exp:1" arrowtail=diamond dir=both]
+2614581199592 -> "3:int" [label="exp:2" arrowtail=diamond dir=both]
+2614581199592[label="{:DynamicArray|}"]
+2614581200600[label="{:RuntimeLiteral|}"]
+2614581199760[label="{:Assignment|+var:str='D'\l}"]
+2614587546760[label="{:Program|}"]
+
+}

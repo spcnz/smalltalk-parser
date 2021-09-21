@@ -2,9 +2,9 @@ import itertools
 import os
 from fnmatch import fnmatch
 from textx import metamodel_from_file
-from model import Document, Workspace
-from util import calculate_time
-from multiprocessing import *
+from model.model import Document, Workspace
+from util.util import calculate_time
+from util.constants import TEXTX_GRAMMAR_PATH
 from multiprocessing.dummy import Pool as ThreadPool
 
 @calculate_time
@@ -37,7 +37,11 @@ def load_workspace(root, meta_model):
     return workspace
 
 def create_parser(root):
-    meta_model = metamodel_from_file("grammar/pharo.tx")
+    meta_model = metamodel_from_file(TEXTX_GRAMMAR_PATH, memoization=False)
     workspace = load_workspace(root, meta_model)
 
     return workspace, meta_model
+
+if __name__ == '__main__':
+    print("tuu")
+    w, metamodel = create_parser("examples//")

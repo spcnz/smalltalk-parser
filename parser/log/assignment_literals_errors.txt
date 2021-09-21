@@ -1,0 +1,1 @@
+Expected '(' or ID or BLOCK_START or '{' or 'nil' or 'true' or 'false' or 'self' or 'super' or '#(' or STRICTFLOAT or INT or '$' or '#Point' or STRING at position C:\Users\vincitoressa\Desktop\smalltalk-parser\parser\examples\simple\assignment_literals.st:(3, 14) => 'bolVar := *#hello . '.

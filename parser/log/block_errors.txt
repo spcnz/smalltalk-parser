@@ -1,0 +1,1 @@
+Expected '(' or ID or BLOCK_START or '{' or 'nil' or 'true' or 'false' or 'self' or 'super' or '#(' or STRICTFLOAT or INT or '$' or '#' or STRING at position c:\Users\vincitoressa\Desktop\smalltalk-parser\parser\examples\complex\block.st:(18, 8) => '  a sad ?*'.

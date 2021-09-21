@@ -12,7 +12,9 @@ import (
 // getContentLength reads from header string size of content
 // It returns the content length read from header
 func getContentLength(header string) (int, error) {
+	fmt.Println("HEADeR je :", header)
 	var length = strings.Split(header, ":")[1]
+	fmt.Println("LENGTH JE  : ", length)
 	size, err := strconv.Atoi(strings.TrimSpace(length))
 	if err != nil {
 		return 0, err
@@ -31,6 +33,9 @@ func readHeader(buff []byte, n int) (int, []byte, error) {
 	if len(arr) > 0 {
 		header := arr[0]
 		var size, err = getContentLength(header)
+		fmt.Println("SIZE JE OVDE : ", size)
+		fmt.Println("STRINGS SU  : ", arr)
+
 		if err != nil {
 			fmt.Println("Error while getting size of string")
 			return 0, nil, err
@@ -56,7 +61,6 @@ func readHeader(buff []byte, n int) (int, []byte, error) {
 // It returns byte representation of response with header
 func format(body interface{}) []byte {
 	json, err := json.Marshal(body)
-	fmt.Println("JSOOON ", string(json))
 	if err != nil {
 		fmt.Println("Error while marshaling to json : ", err.Error())
 		return nil

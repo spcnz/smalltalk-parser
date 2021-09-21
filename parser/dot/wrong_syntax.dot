@@ -1,0 +1,26 @@
+
+    digraph textX {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+    node[
+        shape=record,
+        style=filled,
+        fillcolor=aliceblue
+    ]
+    nodesep = 0.3
+    edge[dir=black,arrowtail=empty]
+
+
+2322663488144 -> 2322663488256 [label="statement:0" arrowtail=diamond dir=both]
+2322663488256 -> 2322663489040 [label="exp" arrowtail=diamond dir=both]
+2322663489040 -> 2322663489152 [label="receiver" arrowtail=diamond dir=both]
+2322663489152[label="{:ParsetimeLiteral|+value:int=100\l}"]
+2322663489040 -> 2322663489208 [label="selector" arrowtail=diamond dir=both]
+2322663489208 -> 2322663489264 [label="msg" arrowtail=diamond dir=both]
+2322663489264[label="{:UnaryMessage|+selector:str='factorial'\l}"]
+2322663489208[label="{:UnaryTail|}"]
+2322663489040[label="{:UnaryExpression|}"]
+2322663488256[label="{:Statement|}"]
+2322663488144[label="{:Program|temps:bool=False\l}"]
+
+}

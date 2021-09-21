@@ -32,7 +32,7 @@ func (ls *LanguageServer) initialize(params *lsp.InitializeParams) *InitializeRe
 	fmt.Println("saved rootPath is : ", ls.rootPath)
 	ls.initOptions = *params
 
-	ls.capabilities = ServerCapabilities{TextDocumentSync: TextDocumentKind(1), ReferenceProvider: true}
+	ls.capabilities = ServerCapabilities{TextDocumentSync: TextDocumentKind(2), ReferenceProvider: true}
 
 	var result = InitializeResult{Capabilities: ls.capabilities}
 

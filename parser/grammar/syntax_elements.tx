@@ -1,0 +1,51 @@
+ParsetimeLiteral:
+    PSEUDO_VARIABLE
+    | LiteralArray
+    | NUMBER
+    | CHARACTER
+    | Symbol
+    | ID
+    | STRING
+;
+
+LiteralArray:
+   '#(' array=ParsetimeLiteral+ ')'
+;
+
+Symbol: '#' value=ID ;
+
+CHARACTER: '$' value=/./ ;
+
+PSEUDO_VARIABLE : 'nil' | 'true' | 'false' | 'self' | 'super';
+KEYWORD:  ID':' ;
+BLOCK_PARAM : ':' ID;
+PERIOD : '.';
+PIPE : '|' ;
+BLOCK_START : '[';
+BLOCK_END : ']';
+
+BINARY_SELECTOR :
+     '+'
+    | '*'
+    | '='
+    | '<<'
+    | '>'
+    | '<'
+    | ','
+    | '@'
+    | '%'
+    | '~'
+    | PIPE
+    | '&'
+    | '-'
+    | '/'
+    | '?'
+    | '\\'
+    ;
+
+Comment:
+   /"(.|[\r\n])*?"/
+;
+
+
+

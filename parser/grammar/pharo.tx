@@ -1,149 +1,99 @@
+import syntax_elements
+
 Program:
-    ws? temps=Temps? ws? statements *= Statement
+     temps=Temps? statements*=Statement['.'] PERIOD?
     ;
 
 Temps :
-     PIPE (ws? vars=IDENTIFIER)+ ws? PIPE
+     PIPE (vars=ID)+ PIPE
    ;
 Statement :
-    ReturnStatement ws?
-    | Expressions ws? PERIOD ws? ReturnStatement
-    | Expressions PERIOD? ws?
+      ReturnStatement
+    | Assignment
+    | Expression
 ;
 ReturnStatement:
-    '^' ws? returnExp=Expression ws? PERIOD?
-;
-
-Expressions:
-    exp=Expression (ws? PERIOD ws? list=Expression)*
+    '^' (return=Assignment | return=Expression)
 ;
 
 Expression:
-      assignment=Assignment
-    | send=Cascade
-    | send=KeywordSend
-    | send=BinarySend
-    | send=UnarySend
-    | literal = Literal
+    Cascade
+    |  KeywordSend
+    |  BinarySend
+    |  UnarySend
+    | Literal
 ;
 
 Assignment :
-    var = IDENTIFIER ws? ':=' ws? value = Expression
+    var = ID ':=' value = Expression
 ;
 
 Cascade:
-    (receiver=KeywordSend | receiver=BinarySend | receiver=UnarySend) (ws? ';' ws? selectors=Message)+
+    (receiver= KeywordSend | receiver= BinarySend | receiver=UnarySend) (';' selectors=Message)+
 ;
 
 Message:
     KeywordMessage
     | BinaryMessage
     | UnaryMessage
-
 ;
 
 BinarySend:
-    (receiver=UnarySend | receiver=Receiver) ws? tail=BinaryTail
+    (receiver=UnarySend | receiver=Receiver)    tail=BinaryTail
 ;
 
 UnarySend:
-    receiver=Receiver ws? selector=UnaryTail
+    receiver=Receiver selector=UnaryTail
 ;
 
 KeywordSend:
-    (receiver=Receiver | receiver=UnarySend)  msg=KeywordMessage
+   (receiver=BinarySend | receiver=UnarySend | receiver=Receiver)  msg=KeywordMessage
 ;
 
 UnaryTail:
-    msg=UnaryMessage ws? tail=UnaryTail? ws?
+    msg=UnaryMessage  tail=UnaryTail?
 ;
 
 UnaryMessage:
-    ws? selector=IDENTIFIER
+       !KEYWORD selector=ID
 ;
 
 BinaryTail : msg=BinaryMessage tail=BinaryTail?;
 
 BinaryMessage:
-    ws? selector=BINARY_SELECTOR ws? (arg=UnarySend | arg=Literal)
+       selector=BINARY_SELECTOR    (arg=UnarySend | arg=Literal)
 ;
 
 KeywordMessage :
-   ws? (keyword=KeywordPair ws?)+
+      keyword=KeywordPair+
 ;
 
-KeywordPair : key=KEYWORD ws? (arg=BinarySend | arg= Literal) ws?;
+KeywordPair : key=KEYWORD   (arg=  BinarySend | arg=UnarySend | arg= Literal )   ;
 
 
 Receiver:
     Subexpression
-	|	IDENTIFIER
+	|	!KEYWORD ID
 	|	Literal
 ;
 
 Subexpression :
-    '(' ws? Expression ws? ')'
+    '('    Expression    ')'
 ;
 
-CommentPharo:
-   /"(.|[\r\n])*?"/
-;
 
 Literal :
     RuntimeLiteral | ParsetimeLiteral
 ;
 
-ParsetimeLiteral:
-    RESERVED_WORD
-    | NUMBER
-    | LiteralArray
-    | /'$'./
-    | STRING
-    | Symbol
-    | IDENTIFIER
-;
-
 RuntimeLiteral:
-    block=Block
+    type=Block | '{' type=DynamicArray '}'
 ;
-Block : BLOCK_START (params=BlockParamList PIPE)? ws? body=Program? BLOCK_END;
+Block : BLOCK_START (params=BlockParamList PIPE)?    body=Program? BLOCK_END;
 
-BlockParamList : (ws? params=BLOCK_PARAM )+;
+BlockParamList : params=BLOCK_PARAM +;
 
-LiteralArray:
-   '#(' ParsetimeLiteral+ ')'
+
+DynamicArray:
+    exp+=Expression['.']
 ;
-
-Symbol: '#' (IDENTIFIER | BINARY_SELECTOR | KEYWORD+ | STRING);
-
-ws : (SEPARATOR | CommentPharo)+;
-BLOCK_PARAM : ':' IDENTIFIER;
-RESERVED_WORD : 'nil' | 'true' | 'false' | 'self' | 'super';
-PERIOD : '.';
-SEPARATOR : /[ \t\r\n]/;
-PIPE : '|' ;
-IDENTIFIER : /[a-zA-Z]+[a-zA-Z0-9_]*/;
-KEYWORD : IDENTIFIER ':';
-
-BLOCK_START : '[';
-BLOCK_END : ']';
-
-BINARY_SELECTOR :
-     '+'
-    | '*' 
-    | '//' 
-    | '='
-    | '<<'
-    | '>' 
-    | '<' 
-    | ',' 
-    | '@' 
-    | '%' 
-    | '~' 
-    | PIPE
-    | '&' 
-    | '-'
-    | '/'
-    | '\\'
-    ;
-

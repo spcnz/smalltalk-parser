@@ -1,0 +1,1 @@
+Expected Not or ID or '+' or '*' or '=' or '<<' or '>' or '<' or ',' or '@' or '%' or '~' or PIPE or '&' or '-' or '/' or '?' or '\\' or ';' or '.' or PERIOD or EOF at position c:\Users\vincitoressa\Desktop\smalltalk-parser\parser\examples\messages\binary_msg.st:(8, 1) => 'cool!'  *2 + 8'.

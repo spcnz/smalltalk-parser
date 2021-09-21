@@ -1,0 +1,1 @@
+Expected '(' or ID or '{' or 'nil' or 'true' or 'false' or 'self' or 'super' or '#(' or STRICTFLOAT or INT or '$' or '#' or STRING at position C:\Users\vincitoressa\Desktop\smalltalk-parser\parser\examples\complex\complex.st:(1, 16) => 'esRepeat: *[ Transcri'.

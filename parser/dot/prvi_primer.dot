@@ -1,0 +1,36 @@
+
+    digraph textX {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+    node[
+        shape=record,
+        style=filled,
+        fillcolor=aliceblue
+    ]
+    nodesep = 0.3
+    edge[dir=black,arrowtail=empty]
+
+
+2614558121152 -> 2614558121432 [label="statements:0" arrowtail=diamond dir=both]
+2614558121432 -> 2614532228600 [label="selector" arrowtail=diamond dir=both]
+2614532228600 -> 2614532230168 [label="msg" arrowtail=diamond dir=both]
+2614532230168[label="{:UnaryMessage|+selector:str='squared'\l}"]
+2614532228600[label="{:UnaryTail|}"]
+2614558121432[label="{:UnarySend|+receiver:int=9\l}"]
+2614558121152 -> 2614532231120 [label="statements:1" arrowtail=diamond dir=both]
+2614532231120 -> 2614532229272 [label="selector" arrowtail=diamond dir=both]
+2614532229272 -> 2614532229832 [label="msg" arrowtail=diamond dir=both]
+2614532229832[label="{:UnaryMessage|+selector:str='size'\l}"]
+2614532229272[label="{:UnaryTail|}"]
+2614532231120[label="{:UnarySend|+receiver:str='blop'\l}"]
+2614558121152 -> 2614532228376 [label="statements:2" arrowtail=diamond dir=both]
+2614532228376 -> 2614532229216 [label="value" arrowtail=diamond dir=both]
+2614532229216 -> 2614532228936 [label="selector" arrowtail=diamond dir=both]
+2614532228936 -> 2614532230728 [label="msg" arrowtail=diamond dir=both]
+2614532230728[label="{:UnaryMessage|+selector:str='factorial'\l}"]
+2614532228936[label="{:UnaryTail|}"]
+2614532229216[label="{:UnarySend|+receiver:int=10\l}"]
+2614532228376[label="{:Assignment|+var:str='a'\l}"]
+2614558121152[label="{:Program|}"]
+
+}

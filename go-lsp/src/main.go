@@ -27,6 +27,7 @@ func handleNotification(not *RPCNotification) error {
 	} else if not.Method == string(CHANGED_DOCUMENT) {
 		return server.textDocumentDidChange(not)
 	} else {
+		fmt.Println("METODA NIJE PODRZNA : ", not.Method)
 		return errors.New("METHOD NOT FOUND")
 	}
 }
@@ -45,6 +46,7 @@ func handleRequest(req *RPCRequest) (*RPCResponse, error) {
 
 		return responseBody, nil
 	} else {
+		fmt.Println("METODA NIJE PODRZNA : ", req.Method)
 		return nil, errors.New("METHOD NOT FOUND")
 	}
 }
@@ -87,7 +89,10 @@ func main() {
 				fmt.Println("Error while getting header : ", err.Error())
 			} else {
 				headerFound = true
-				buff = make([]byte, size)
+				fmt.Println("SIZE IS : ", size)
+				if size > 0 {
+					buff = make([]byte, size)
+				}
 			}
 		} else {
 			//header is found read rest of msg
@@ -107,6 +112,8 @@ func main() {
 				}
 			} else {
 				fmt.Println("Error : ", err.Error())
+				size = 0
+				savedData = nil
 			}
 			buff = make([]byte, 512)
 			headerFound = false

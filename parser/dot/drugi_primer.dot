@@ -1,0 +1,32 @@
+
+    digraph textX {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+    node[
+        shape=record,
+        style=filled,
+        fillcolor=aliceblue
+    ]
+    nodesep = 0.3
+    edge[dir=black,arrowtail=empty]
+
+
+2614587775072 -> 2614519958944 [label="statements:0" arrowtail=diamond dir=both]
+2614519958944 -> 2614519957208 [label="receiver" arrowtail=diamond dir=both]
+2614519957208 -> 2614519957600 [label="selector" arrowtail=diamond dir=both]
+2614519957600 -> 2614519956424 [label="msg" arrowtail=diamond dir=both]
+2614519956424[label="{:UnaryMessage|+selector:str='new'\l}"]
+2614519957600[label="{:UnaryTail|}"]
+2614519957208[label="{:UnarySend|+receiver:str='Point'\l}"]
+2614519958944 -> 2614519957376 [label="selectors:0" arrowtail=diamond dir=both]
+2614519957376 -> 2614519955528 [label="keyword:0" arrowtail=diamond dir=both]
+2614519955528[label="{:KeywordPair|+key:str='setX:'\l+arg:int=25\l}"]
+2614519957376 -> 2614519956760 [label="keyword:1" arrowtail=diamond dir=both]
+2614519956760[label="{:KeywordPair|+key:str='setY:'\l+arg:int=35\l}"]
+2614519957376[label="{:KeywordMessage|}"]
+2614519958944 -> 2614519955696 [label="selectors:1" arrowtail=diamond dir=both]
+2614519955696[label="{:UnaryMessage|+selector:str='isZero'\l}"]
+2614519958944[label="{:Cascade|}"]
+2614587775072[label="{:Program|}"]
+
+}

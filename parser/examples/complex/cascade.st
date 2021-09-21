@@ -1,4 +1,3 @@
-"Primeri cascade unarnih i binarnih poruka"
 
 Transcript show: 'hello'; cr.
 

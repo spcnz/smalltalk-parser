@@ -1,4 +1,4 @@
-"Ovo je primer dodeljivanja vrednosti literala nekim promenljivama"
+
 
 a := 4 .
 
@@ -13,3 +13,5 @@ f := super .
 g := true .
 
 h := false .
+
+r := 1.4 .

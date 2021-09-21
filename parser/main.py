@@ -1,10 +1,10 @@
 import traceback
-from lsp_model import *
+from model.lsp_model import *
 from st_parser import create_parser, parse_doc
 import socketserver
 from enum import Enum
 from find_references import  find_all_references
-from util import _content_length
+from util.util import _content_length
 
 workspace = None
 meta_model = None
@@ -26,7 +26,7 @@ class TCPHandler(socketserver.StreamRequestHandler):
     override the handle() method to implement communication to the
     client.
     """
-    def handle_method(self, request:RPCRequest):
+    def handle_request(self, request:RPCRequest):
         if request.method not in MethodName.list():
             raise Exception("Method not allowed")
         params = request.params
@@ -66,7 +66,7 @@ class TCPHandler(socketserver.StreamRequestHandler):
         json_data = json.loads(self.data.decode('utf-8'))
         request = RPCRequest(json_data) if 'id' in json_data.keys() else RPCNotification(json_data)
         try:
-            response = self.handle_method(request)
+            response = self.handle_request(request)
             if isinstance(request, RPCNotification):
                 return
             if (request.method == MethodName.FIND_REFERENCES.value):

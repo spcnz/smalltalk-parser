@@ -1,0 +1,1 @@
+Expected Not at position C:\Users\vincitoressa\Desktop\smalltalk-parser\parser\examples\messages\keyword_msg.st:(3, 20) => 'isedTo: 3 *.  2 + 5'.

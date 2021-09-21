@@ -1,1 +1,1 @@
-Expected SEPARATOR or CommentPharo or '(' or IDENTIFIER or BLOCK_START or 'nil' or 'true' or 'false' or 'self' or 'super' or STRICTFLOAT or INT or '#(' or ''$'.' or STRING or '#' at position C:\Users\vincitoressa\Desktop\smalltalk-parser\parser\examples\bin_un_msg.st:(5, 9) => ' OVOVO E=*=1=1--2=::'.
+Expected Not or ID or ':' at position C:\Users\vincitoressa\Desktop\smalltalk-parser\parser\examples\messages\message_combination\bin_un_msg.st:(4, 17) => ' factorial*.  1 cla'.

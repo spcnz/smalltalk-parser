@@ -1,5 +1,5 @@
 isRaining
   ifTrue: [ self takeMyUmbrella ]
-  ifFalse: [ self takeMySunglasses ].
+  ifFalse: [ self takeMySunglasses ] .
 
 patate ifFalse: [ ]  ifTrue: [].

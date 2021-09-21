@@ -1,0 +1,1 @@
+Expected Not or ID or '+' or '*' or '=' or '<<' or '>' or '<' or ',' or '@' or '%' or '~' or PIPE or '&' or '-' or '/' or '?' or '\\' or ';' or '.' or PERIOD or EOF at position c:\Users\vincitoressa\Desktop\smalltalk-parser\parser\examples\messages\message_combination\complex_unary_msg.st:(11, 1) => 'torial  *20 factori'.

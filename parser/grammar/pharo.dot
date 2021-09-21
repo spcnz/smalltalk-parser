@@ -1,0 +1,153 @@
+
+    digraph textX {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+    node[
+        shape=record,
+        style=filled,
+        fillcolor=aliceblue
+    ]
+    nodesep = 0.3
+    edge[dir=black,arrowtail=empty]
+
+
+3254942595560[ label="{Program|}"]
+
+3254942592728[ label="{Temps|vars: list[ID]\l}"]
+
+3254942588952[ label="{*Statement|}"]
+
+3254942594616[ label="{ReturnStatement|return: OBJECT\l}"]
+
+3254942591784[ label="{*Expression|}"]
+
+3254942593672[ label="{Assignment|var: ID\l}"]
+
+3254942573848[ label="{Cascade|receiver: OBJECT\l}"]
+
+3254942584232[ label="{*Message|}"]
+
+3254942571960[ label="{BinarySend|receiver: OBJECT\l}"]
+
+3254942605944[ label="{UnarySend|}"]
+
+3254942576680[ label="{KeywordSend|receiver: OBJECT\l}"]
+
+3254942609720[ label="{UnaryTail|}"]
+
+3254942613496[ label="{UnaryMessage|selector: ID\l}"]
+
+3254942610664[ label="{BinaryTail|}"]
+
+3254942614440[ label="{BinaryMessage|selector: BINARY_SELECTOR\larg: OBJECT\l}"]
+
+3254942618216[ label="{KeywordMessage|}"]
+
+3254942605000[ label="{KeywordPair|key: KEYWORD\larg: OBJECT\l}"]
+
+3254942574792[ label="{*Receiver|}"]
+
+3254942608776[ label="{*Subexpression|}"]
+
+3254942617272[ label="{*Literal|}"]
+
+3254942630488[ label="{RuntimeLiteral|type: OBJECT\l}"]
+
+3254942623880[ label="{Block|}"]
+
+3254942626712[ label="{BlockParamList|params: list[BLOCK_PARAM]\l}"]
+
+3254942629544[ label="{DynamicArray|}"]
+
+3254909623592[ label="{*ParsetimeLiteral|}"]
+
+3254909641528[ label="{LiteralArray|}"]
+
+3254909646248[ label="{Symbol|value: ID\l}"]
+
+3254909633032[ label="{CHARACTER|value: STRING\l}"]
+
+
+
+3254942595560 -> 3254942592728[arrowtail=diamond, dir=both, headlabel="temps "]
+3254942595560 -> 3254942588952[arrowtail=diamond, dir=both, headlabel="statements 0..*"]
+3254942588952 -> 3254942594616 [dir=back]
+3254942588952 -> 3254942593672 [dir=back]
+3254942588952 -> 3254942591784 [dir=back]
+3254909640584[ label="{*OBJECT|}"]
+
+3254942591784 -> 3254942573848 [dir=back]
+3254942591784 -> 3254942576680 [dir=back]
+3254942591784 -> 3254942571960 [dir=back]
+3254942591784 -> 3254942605944 [dir=back]
+3254942591784 -> 3254942617272 [dir=back]
+3254942593672 -> 3254942591784[arrowtail=diamond, dir=both, headlabel="value "]
+3254909640584[ label="{*OBJECT|}"]
+
+3254942573848 -> 3254942584232[arrowtail=diamond, dir=both, headlabel="selectors 1..*"]
+3254942584232 -> 3254942618216 [dir=back]
+3254942584232 -> 3254942614440 [dir=back]
+3254942584232 -> 3254942613496 [dir=back]
+3254909640584[ label="{*OBJECT|}"]
+
+3254942571960 -> 3254942610664[arrowtail=diamond, dir=both, headlabel="tail "]
+3254942605944 -> 3254942574792[arrowtail=diamond, dir=both, headlabel="receiver "]
+3254942605944 -> 3254942609720[arrowtail=diamond, dir=both, headlabel="selector "]
+3254909640584[ label="{*OBJECT|}"]
+
+3254942576680 -> 3254942618216[arrowtail=diamond, dir=both, headlabel="msg "]
+3254942609720 -> 3254942613496[arrowtail=diamond, dir=both, headlabel="msg "]
+3254942609720 -> 3254942609720[arrowtail=diamond, dir=both, headlabel="tail "]
+3254942610664 -> 3254942614440[arrowtail=diamond, dir=both, headlabel="msg "]
+3254942610664 -> 3254942610664[arrowtail=diamond, dir=both, headlabel="tail "]
+3254909640584[ label="{*OBJECT|}"]
+
+3254942618216 -> 3254942605000[arrowtail=diamond, dir=both, headlabel="keyword 1..*"]
+3254909640584[ label="{*OBJECT|}"]
+
+3254942574792 -> 3254942608776 [dir=back]
+3254942574792 -> 3254942617272 [dir=back]
+3254942608776 -> 3254942591784 [dir=back]
+3254942617272 -> 3254942630488 [dir=back]
+3254942617272 -> 3254909623592 [dir=back]
+3254909640584[ label="{*OBJECT|}"]
+
+3254942623880 -> 3254942626712[arrowtail=diamond, dir=both, headlabel="params "]
+3254942623880 -> 3254942595560[arrowtail=diamond, dir=both, headlabel="body "]
+3254942629544 -> 3254942591784[arrowtail=diamond, dir=both, headlabel="exp 1..*"]
+3254909623592 -> 3254909641528 [dir=back]
+3254909623592 -> 3254909633032 [dir=back]
+3254909623592 -> 3254909646248 [dir=back]
+3254909641528 -> 3254909623592[arrowtail=diamond, dir=both, headlabel="array 1..*"]
+match_rules [ shape=plaintext, label=< <table>
+	<tr>
+		<td><b>BINARY_SELECTOR</b></td><td>+|*|=|&lt;&lt;|&gt;|&lt;|,|@|%|~|&amp;|-|/|?|\\</td>
+	</tr>
+	<tr>
+		<td><b>BLOCK_END</b></td><td>]</td>
+	</tr>
+	<tr>
+		<td><b>BLOCK_PARAM</b></td><td>: ID</td>
+	</tr>
+	<tr>
+		<td><b>BLOCK_START</b></td><td>[</td>
+	</tr>
+	<tr>
+		<td><b>Comment</b></td><td>&quot;(.|[\r\n])*?&quot;</td>
+	</tr>
+	<tr>
+		<td><b>KEYWORD</b></td><td>ID :</td>
+	</tr>
+	<tr>
+		<td><b>PERIOD</b></td><td>.</td>
+	</tr>
+	<tr>
+		<td><b>PIPE</b></td><td>|</td>
+	</tr>
+	<tr>
+		<td><b>PSEUDO_VARIABLE</b></td><td>nil|true|false|self|super</td>
+	</tr>
+</table> >]
+
+
+}

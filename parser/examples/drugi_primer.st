@@ -1,0 +1,1 @@
+Point new; setX: 25 setY: 35; isZero .
