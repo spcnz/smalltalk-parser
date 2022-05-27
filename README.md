@@ -1,6 +1,5 @@
 # Software for Smalltalk source code analysis
 
-
 About
 ====
 
@@ -18,4 +17,3 @@ The Pharo grammar and parser are written using [textX](http://textx.github.io/te
 Architecture components
 ====
 ![alt text](https://github.com/specnazm/smalltalk-parser/blob/main/components.png?raw=true)
-
